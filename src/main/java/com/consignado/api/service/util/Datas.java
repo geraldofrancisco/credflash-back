@@ -17,7 +17,7 @@ public class Datas {
 		case 6:
 			return true;
 		case 7:
-			return cal.get(Calendar.HOUR_OF_DAY) <= 17 && cal.get(Calendar.MINUTE) <= 45;			
+			return cal.get(Calendar.HOUR_OF_DAY) <= 17;			
 		default:
 			return false;
 		}			

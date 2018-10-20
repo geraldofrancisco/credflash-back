@@ -7,12 +7,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import com.consignado.api.model.constantes.TipoConsultaPan;
+import com.consignado.api.model.ConsultaPan;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-@Service
+@Component
 public class PanApi {
 	private final String URL = "http://margem.datafast.com.br/cartaopan/?";
 	private final String USUARIO_API = "CREDFLASH";
@@ -20,11 +20,11 @@ public class PanApi {
 	private final String USUARIO_PAN = "09165197674";
 	private final String SENHA_PAN = "Pan2028%23";
 
-	public Resultado consultaPan(String cpf, String matricula, TipoConsultaPan orgao) {
+	public Resultado consultaPan(ConsultaPan consultaPan) {
 		Resultado resultado = null;
 		URL url;
 		try {
-			url = new URL(urlCompleta(cpf, matricula, orgao));
+			url = new URL(urlCompleta(consultaPan));
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.addRequestProperty("Request-Method", "GET");
 			connection.connect();
@@ -51,7 +51,7 @@ public class PanApi {
 		return sb.toString();
 	}
 
-	private String urlCompleta(String cpf, String matricula, TipoConsultaPan orgao) {
+	private String urlCompleta(ConsultaPan consultaPan) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(URL);
 		sb.append("usuario=");
@@ -63,13 +63,13 @@ public class PanApi {
 		sb.append("&senhaModulo=");
 		sb.append(SENHA_PAN);
 		sb.append("&cpf=");
-		sb.append(cpf);
+		sb.append(consultaPan.getCliente().getCpf());
 		sb.append("&convenioConsulta=");
-		sb.append(orgao);
+		sb.append(consultaPan.getTipo());
 
-		if (matricula != null) {
+		if (consultaPan.getCliente().getMatricula() != null) {
 			sb.append("&matricula=");
-			sb.append(matricula);
+			sb.append(consultaPan.getCliente().getMatricula());
 		}
 		String url = sb.toString();
 		System.out.println(url);
