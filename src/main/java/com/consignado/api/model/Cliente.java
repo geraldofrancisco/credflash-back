@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -31,6 +32,7 @@ public class Cliente {
 	private String nome;
 	
 	@CPF
+	@NotBlank(message="O CPF não pode estar em branco")
 	@Getter
 	@Setter
 	private String cpf;
@@ -42,7 +44,12 @@ public class Cliente {
 	@Getter
 	@Setter
 	@Column(name="data_nascimento")
-	private Date dataNascimento;		
+	private Date dataNascimento;	
+	
+	@Getter
+	@Setter
+	@Column(columnDefinition = "boolean default false")
+	private Boolean falecido;
 	
 	public Cliente() {
 		

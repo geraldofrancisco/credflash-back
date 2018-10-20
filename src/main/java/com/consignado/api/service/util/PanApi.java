@@ -20,28 +20,24 @@ public class PanApi {
 	private final String USUARIO_PAN = "09165197674";
 	private final String SENHA_PAN = "Pan2028%23";
 
-	public void consultaPan(String cpf, String matricula, TipoConsultaPan orgao) {
+	public Resultado consultaPan(String cpf, String matricula, TipoConsultaPan orgao) {
+		Resultado resultado = null;
 		URL url;
 		try {
 			url = new URL(urlCompleta(cpf, matricula, orgao));
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.addRequestProperty("Request-Method", "GET");
 			connection.connect();
-			if (connection.getResponseCode() == 200) {// HttpURLConnection.HTTP_ACCEPTED
-				String xml = inputStreamToString(connection.getInputStream()).replace("_", "");
-				if (xml.contains("<ERRO>NAO</ERRO>")) {					
-					XmlMapper mapper = new XmlMapper();
-					
-				}
-				System.out.println(xml);
-				// mapper.readValue(xml, valueType) sd
+			if (connection.getResponseCode() == 200) {
+				String xml = inputStreamToString(connection.getInputStream()).replace("_", "").toLowerCase();
+				XmlMapper mapper = new XmlMapper();
+				resultado = mapper.readValue(xml,Resultado.class);									
 			}
 			connection.disconnect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return resultado;
 	}
 
 	private static String inputStreamToString(InputStream is) throws IOException {

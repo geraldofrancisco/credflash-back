@@ -2,24 +2,13 @@ package com.consignado.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.consignado.api.model.constantes.TipoConsultaPan;
-import com.consignado.api.service.util.PanApi;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class ConsignadoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConsignadoApplication.class, args);
-		teste();
-	}
-
-	private static void teste() {		
-		PanApi p = new PanApi();
-		try {
-			p.consultaPan("06970565629", null, TipoConsultaPan.INSS);
-		} catch (Exception e) {			
-			e.printStackTrace();
-		}		
-	}
+		SpringApplication.run(ConsignadoApplication.class, args);		
+	}	
 }
