@@ -1,22 +1,14 @@
 package com.consignado.api.model;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.consignado.api.model.constantes.TipoConsultaPan;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Table(schema="consulta", name="pan")
 @EqualsAndHashCode(of= {"oid"})
-public class ConsultaPan {
+public class CartaoPan {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Getter
@@ -35,21 +27,22 @@ public class ConsultaPan {
 	@Getter
 	@Setter
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="oid_cliente")
-	private Cliente cliente;
+	@JoinColumn(name="oid_consulta")
+	private ConsultaPan consultaPan;
 	
 	@Getter
 	@Setter
-	@Enumerated(EnumType.STRING)
-	private TipoConsultaPan tipo;
+	@Column(name="limite_saque_total")
+	private Double limiteSaqueTotal;
 	
 	@Getter
 	@Setter
-	@Column(name="data_consulta")
-	private Date dataConsulta;
+	@Column(name="limite_saque_disponivel")
+	private Double limiteSaqueDisponivel;
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy="consultaPan")
-	private List<CartaoPan> cartoes;
+	@Column(name="margem_livre")
+	private Double margemLivre;
+	
 }
