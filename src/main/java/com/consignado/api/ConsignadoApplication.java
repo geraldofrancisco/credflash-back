@@ -3,6 +3,7 @@ package com.consignado.api;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.consignado.api.model.constantes.TipoConsultaPan;
 import com.consignado.api.service.util.PanApi;
 
 @SpringBootApplication
@@ -16,7 +17,7 @@ public class ConsignadoApplication {
 	private static void teste() {		
 		PanApi p = new PanApi();
 		try {
-			p.consultaPan("06970565629", null);
+			p.consultaPan("06970565629", null, TipoConsultaPan.INSS);
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}		
